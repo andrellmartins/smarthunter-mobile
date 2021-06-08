@@ -67,7 +67,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textViewCourseTitle = itemView.findViewById(R.id.textViewCourseTitle);
             buttonEnroll = itemView.findViewById(R.id.buttonEnroll);
             textViewCourseDescription = itemView.findViewById(R.id.textViewCourseDescription);
-            //TODO
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

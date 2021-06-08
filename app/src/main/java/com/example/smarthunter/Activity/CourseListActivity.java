@@ -27,7 +27,7 @@ public class CourseListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list);
-        Drawable logo = getResources().getDrawable(R.drawable.logo, getTheme());
+        Drawable logo = getResources().getDrawable(R.drawable.logocourses, getTheme());
         getSupportActionBar().setBackgroundDrawable(logo);
         getSupportActionBar().setTitle(" ");
         ArrayList<Course> courses = new ArrayList<Course>();
