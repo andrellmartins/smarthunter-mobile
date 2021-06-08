@@ -9,4 +9,8 @@
     <string name="e_mail">E-mail</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="complete_name">Complete Name</string>
+    <string name="course_list">Course List</string>
+    <string name="enroll">Enroll</string>
+    <string name="course_image">Course Image</string>
+    <string name="course_title">Course Title</string>
 </resources>

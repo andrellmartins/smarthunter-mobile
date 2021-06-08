@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="230dp">
+
+        <TextView
+            android:id="@+id/textViewCourseDescription"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCourse" />
+
+        <Button
+            android:id="@+id/buttonEnroll"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#F44336"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="0dp"
+            android:text="@string/enroll"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewCourse"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewCourse"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCourseTitle" />
+
+        <TextView
+            android:id="@+id/textViewCourseTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@string/course_title"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewCourse"
+            android:layout_width="160dp"
+            android:layout_height="90dp"
+            android:contentDescription="@string/course_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCourseTitle"
+            app:srcCompat="@android:drawable/presence_video_online" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+</LinearLayout>
