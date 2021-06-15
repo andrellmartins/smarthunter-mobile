@@ -14,35 +14,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.smarthunter.Model.Course;
 import com.example.smarthunter.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerViewCoursesAdapter.ViewHolder> {
 
     int counter = 0;
 
     private static ClickListener clickListener;
 
     public void setClickListener(ClickListener clickListener) {
-        RecyclerViewAdapter.clickListener = clickListener;
+        RecyclerViewCoursesAdapter.clickListener = clickListener;
     }
 
     public interface ClickListener {
         void onItemClick(int position, View view);
-
+        void onEnrollClick(int position, View view);
         boolean onItemLongClick(int position, View view);
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewCoursesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View itemView = layoutInflater.inflate(
-                R.layout.recyclerview_item, parent, false
+                R.layout.recyclerview_courses, parent, false
         );
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewCoursesAdapter.ViewHolder holder, int position) {
         Course c = CoursesRepository.getInstance().getCourses().get(position);
         holder.textViewCourseTitle.setText(c.getCourseTitle());
         //holder.imageViewCourse.setImageURI();
@@ -82,6 +82,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         return false;
 
                     return clickListener.onItemLongClick(getAdapterPosition(), view);
+                }
+            });
+            buttonEnroll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListener == null)
+                        return;
+                    clickListener.onEnrollClick(getAdapterPosition(), view);
                 }
             });
         }

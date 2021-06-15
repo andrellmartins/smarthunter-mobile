@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CourseListActivity">
+    tools:context=".Activity.ClassListActivity">
 
     <TextView
-        android:id="@+id/textViewCourse"
+        android:id="@+id/textViewClasses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="250dp"
-        android:text="@string/course_list"
+        android:text="@string/classes_list"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCourses"
+        android:id="@+id/recyclerViewClasses"
         android:layout_width="0dp"
         android:layout_height="540dp"
         android:layout_marginStart="40dp"
@@ -30,6 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCourse"
+        app:layout_constraintTop_toBottomOf="@+id/textViewClasses"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

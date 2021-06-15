@@ -11,6 +11,7 @@ public class CoursesRepository {
     private static final CoursesRepository instance = new CoursesRepository();
     private ArrayList<Course> courses;
     private Context context;
+    private int selectedCourse;
 
     public CoursesRepository() {
     }
@@ -33,5 +34,13 @@ public class CoursesRepository {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public int getSelectedCourse() {
+        return selectedCourse;
+    }
+
+    public void setSelectedCourse(int selectedCourse) {
+        this.selectedCourse = selectedCourse;
     }
 }
