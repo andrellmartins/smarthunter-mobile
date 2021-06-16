@@ -1,5 +1,6 @@
 package com.example.smarthunter.Activity;
 
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,9 +54,7 @@ public class ClassListActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-
                 layoutManager.getOrientation());
-
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 

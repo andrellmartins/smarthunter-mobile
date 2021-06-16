@@ -18,11 +18,8 @@ public class RegisterActivity extends GenericActivity {
         Drawable logo = getResources().getDrawable(R.drawable.logo, getTheme());
         getSupportActionBar().setBackgroundDrawable(logo);
         getSupportActionBar().setTitle(" ");
-
-
     }
 
     public void onClick(View view){
-        this.createDialog();
     }
 }
