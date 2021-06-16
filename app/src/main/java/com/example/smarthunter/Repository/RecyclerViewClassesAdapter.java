@@ -1,6 +1,7 @@
 package com.example.smarthunter.Repository;
 
 import android.content.Context;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +28,7 @@ public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     public interface ClickListener {
-        void onItemClick(int position, View view);
-        void onEnrollClick(int position, View view);
-        boolean onItemLongClick(int position, View view);
+        void onVideoClick(int position, View view);
     }
 
 
@@ -48,7 +47,6 @@ public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Class c = CoursesRepository.getInstance().getCourses().get(CoursesRepository.getInstance().getSelectedCourse()).getClasses().get(position);
         holder.textViewClassTitle.setText(c.getClassTitle());
-        //holder.imageViewClass.setImageURI();
         holder.textViewClassDescription.setText(c.getClassDescription());
     }
 
@@ -68,6 +66,14 @@ public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerVie
             textViewClassTitle = itemView.findViewById(R.id.textViewClassTitle);
             textViewClassDescription = itemView.findViewById(R.id.textViewClassDescription);
 
+            imageViewClass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListener == null)
+                        return;
+                    clickListener.onVideoClick(getAdapterPosition(), view);
+                }
+            });
 
         }
     }

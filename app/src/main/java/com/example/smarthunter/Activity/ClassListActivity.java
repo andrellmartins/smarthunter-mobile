@@ -5,9 +5,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.smarthunter.R;
 import com.example.smarthunter.Repository.CoursesRepository;
@@ -29,6 +31,12 @@ public class ClassListActivity extends AppCompatActivity {
         coursesRepository = CoursesRepository.getInstance();
         recyclerView = findViewById(R.id.recyclerViewClasses);
         RecyclerViewClassesAdapter adapter = new RecyclerViewClassesAdapter();
+        adapter.setClickListener(new RecyclerViewClassesAdapter.ClickListener() {
+            @Override
+            public void onVideoClick(int position, View view) {
+                String videoLink = coursesRepository.getCourses().get(coursesRepository.getSelectedCourse()).getClasses().get(position).getClassLink();
+            }
+        });
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

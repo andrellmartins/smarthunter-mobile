@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:overScrollMode="always"
+    android:scrollbarStyle="insideInset"
+    android:verticalScrollbarPosition="right">
 
     <Space
         android:layout_width="match_parent"
@@ -23,7 +26,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewClassTitle"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            app:srcCompat="@android:drawable/presence_video_busy" />
 
         <TextView
             android:id="@+id/textViewClassTitle"
