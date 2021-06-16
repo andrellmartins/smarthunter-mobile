@@ -6,10 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.smarthunter.Model.DeveloperKey;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 import com.example.smarthunter.R;
 import com.example.smarthunter.Repository.CoursesRepository;
@@ -20,6 +25,10 @@ public class ClassListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewCoursesAdapter adapter;
     CoursesRepository coursesRepository;
+
+    private static final int REQ_START_STANDALONE_PLAYER = 1;
+    private static final int REQ_RESOLVE_SERVICE_MISSING = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +44,9 @@ public class ClassListActivity extends AppCompatActivity {
             @Override
             public void onVideoClick(int position, View view) {
                 String videoLink = coursesRepository.getCourses().get(coursesRepository.getSelectedCourse()).getClasses().get(position).getClassLink();
+                Intent intent = YouTubeStandalonePlayer.createVideoIntent(
+                        ClassListActivity.this, DeveloperKey.DEVELOPER_KEY, videoLink, 0, true, false);
+                startActivityForResult(intent, REQ_START_STANDALONE_PLAYER);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -45,5 +57,19 @@ public class ClassListActivity extends AppCompatActivity {
                 layoutManager.getOrientation());
 
         recyclerView.addItemDecoration(dividerItemDecoration);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_START_STANDALONE_PLAYER && resultCode != RESULT_OK) {
+            YouTubeInitializationResult errorReason =
+                    YouTubeStandalonePlayer.getReturnedInitializationResult(data);
+            if (errorReason.isUserRecoverableError()) {
+                errorReason.getErrorDialog(this, 0).show();
+            } else {
+                Toast.makeText(this, "Error Initializing YouTube Player", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
