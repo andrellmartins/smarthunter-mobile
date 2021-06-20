@@ -37,7 +37,7 @@
             android:paddingTop="0dp"
             android:paddingRight="0dp"
             android:paddingBottom="0dp"
-            android:text="@string/enroll"
+            android:text="@string/add_to_favorites"
             app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewCourse"
             app:layout_constraintEnd_toEndOf="parent"
