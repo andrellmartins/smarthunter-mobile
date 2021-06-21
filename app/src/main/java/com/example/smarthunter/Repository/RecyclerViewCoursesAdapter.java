@@ -17,8 +17,12 @@ import com.example.smarthunter.R;
 public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerViewCoursesAdapter.ViewHolder> {
 
     int counter = 0;
-
+    CourseRepository courseRepository;
     private static ClickListener clickListener;
+
+    public RecyclerViewCoursesAdapter(Context context){
+        courseRepository = CourseRepository.getInstance(context,null,null);
+    }
 
     public void setClickListener(ClickListener clickListener) {
         RecyclerViewCoursesAdapter.clickListener = clickListener;

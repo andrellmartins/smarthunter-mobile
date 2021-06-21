@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.smarthunter.Model.DeveloperKey;
+import com.example.smarthunter.Repository.UserRepository;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
@@ -23,6 +24,8 @@ import com.example.smarthunter.Repository.RecyclerViewCoursesAdapter;
 public class ClassListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewCoursesAdapter adapter;
+
+    UserRepository userRepository;
     CourseRepository courseRepository;
 
     private static final int REQ_START_STANDALONE_PLAYER = 1;
@@ -36,7 +39,8 @@ public class ClassListActivity extends AppCompatActivity {
         Drawable logo = getResources().getDrawable(R.drawable.logoclasses, getTheme());
         getSupportActionBar().setBackgroundDrawable(logo);
         getSupportActionBar().setTitle(" ");
-        courseRepository = CourseRepository.getInstance();
+        userRepository = (UserRepository) UserRepository.getInstance(ClassListActivity.this,null,null);
+        courseRepository = CourseRepository.getInstance(ClassListActivity.this,userRepository.getTokenType(),userRepository.getTOKEN());
         recyclerView = findViewById(R.id.recyclerViewClasses);
         RecyclerViewClassesAdapter adapter = new RecyclerViewClassesAdapter();
         adapter.setClickListener(new RecyclerViewClassesAdapter.ClickListener() {

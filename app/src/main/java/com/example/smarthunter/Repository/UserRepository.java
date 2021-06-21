@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.smarthunter.Model.User;
+import com.example.smarthunter.Requisition.VolleyQueueSingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,14 +28,25 @@ import java.util.Map;
 
 public class UserRepository extends Repository{
     private static UserRepository instance;
-    protected static final String URL_BASE = Repository.URL_CONN + "users";
-    private Context context;
+    protected static String URL_BASE = Repository.URL_CONN + "users";
     public static LoginListener loginListener;
     public User loggedUser;
     protected static String TOKEN;
     protected static String TOKEN_TYPE;
 
-    private UserRepository(Context context,String username,String password) {
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+
+    public static String getTOKEN() {
+        return TOKEN;
+    }
+
+    public static String getTokenType() {
+        return TOKEN_TYPE;
+    }
+
+    protected UserRepository(Context context, String username, String password) {
         super(context);
         login(username,password);
     }
@@ -153,15 +165,6 @@ public class UserRepository extends Repository{
         Log.d("keepAlive","POSQueue");
     }
 
-    public HashMap<String, String> getRequestHeaders(){
-        HashMap<String,String> headers = new HashMap<String,String>();
-        headers.put("Content-Type","application/json");
-        headers.put("Accept","application/json");
-        headers.put("Authorization",TOKEN_TYPE+" "+TOKEN);
-        Log.d("REQUEST_HEADERS",headers.toString());
-        return headers;
-    }
-
     public static Repository getInstance(Context context, @Nullable String username,@Nullable String password) {
         if(instance == null && username != null && password != null){
             instance = new UserRepository(context,username,password);
@@ -172,7 +175,7 @@ public class UserRepository extends Repository{
         String url = URL_BASE;
         JSONObject newUserData = new JSONObject();
         if(queue == null){
-            queue = Volley.newRequestQueue(context);
+            queue = VolleyQueueSingleton.getInstance(context);
         }
 
         try {
@@ -215,7 +218,7 @@ public class UserRepository extends Repository{
             jsonObject.put("email",email);
             jsonObject.put("password",password);
         }catch(JSONException e){
-            Log.d("updateLoggedUser_JSONE",e.getMessage());
+            Log.d("updateLoggedUser_JSON_E",e.getMessage());
         }
 
         Log.d("updateLoggedUser_url",url);
