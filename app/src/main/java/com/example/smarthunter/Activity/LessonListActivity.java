@@ -21,7 +21,7 @@ import com.example.smarthunter.Repository.CourseRepository;
 import com.example.smarthunter.Repository.RecyclerViewClassesAdapter;
 import com.example.smarthunter.Repository.RecyclerViewCoursesAdapter;
 
-public class ClassListActivity extends AppCompatActivity {
+public class LessonListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewCoursesAdapter adapter;
 
@@ -35,21 +35,21 @@ public class ClassListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_class_list);
+        setContentView(R.layout.activity_lesson_list);
         Drawable logo = getResources().getDrawable(R.drawable.logoclasses, getTheme());
         getSupportActionBar().setBackgroundDrawable(logo);
         getSupportActionBar().setTitle(" ");
-        userRepository = (UserRepository) UserRepository.getInstance(ClassListActivity.this,null,null);
-        courseRepository = CourseRepository.getInstance(ClassListActivity.this,userRepository.getTokenType(),userRepository.getTOKEN());
+        userRepository = (UserRepository) UserRepository.getInstance(LessonListActivity.this,null,null);
+        courseRepository = CourseRepository.getInstance(LessonListActivity.this,userRepository.getTokenType(),userRepository.getTOKEN());
 
         recyclerView = findViewById(R.id.recyclerViewClasses);
-        RecyclerViewClassesAdapter adapter = new RecyclerViewClassesAdapter(ClassListActivity.this);
+        RecyclerViewClassesAdapter adapter = new RecyclerViewClassesAdapter(LessonListActivity.this);
         adapter.setClickListener(new RecyclerViewClassesAdapter.ClickListener() {
             @Override
             public void onVideoClick(int position, View view) {
-                String videoLink = courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getClasses().get(position).getClassLink();
+                String videoLink = courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getLessons().get(position).getLessonLink();
                 Intent intent = YouTubeStandalonePlayer.createVideoIntent(
-                        ClassListActivity.this, DeveloperKey.DEVELOPER_KEY, videoLink, 0, true, false);
+                        LessonListActivity.this, DeveloperKey.DEVELOPER_KEY, videoLink, 0, true, false);
                 startActivityForResult(intent, REQ_START_STANDALONE_PLAYER);
             }
         });

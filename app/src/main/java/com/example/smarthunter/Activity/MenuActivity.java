@@ -31,7 +31,7 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void buttonFavoritesClicked(View view){
+    public void buttonEnrolledClicked(View view){
         userRepository.filterEnrolled = true;
         Intent intent = new Intent(MenuActivity.this, CourseListActivity.class);
         startActivity(intent);

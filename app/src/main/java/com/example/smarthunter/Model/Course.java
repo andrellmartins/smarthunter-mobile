@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class Course {
     public Integer id;
     public String courseTitle;
-    public ArrayList<Class> classes;
+    public ArrayList<Lesson> lessons;
     public String courseImage;
     public String courseDescription;
 
-    public Course(Integer id, String courseTitle, String courseDescription, String courseImage, ArrayList<Class> classes) {
+    public Course(Integer id, String courseTitle, String courseDescription, String courseImage, ArrayList<Lesson> lessons) {
         this.id = id;
         this.courseTitle = courseTitle;
-        this.classes = classes;
+        this.lessons = lessons;
         this.courseImage = courseImage;
         this.courseDescription = courseDescription;
     }
@@ -33,16 +33,16 @@ public class Course {
         this.courseTitle = courseTitle;
     }
 
-    public ArrayList<Class> getClasses() {
-        return classes;
+    public ArrayList<Lesson> getLessons() {
+        return lessons;
     }
 
-    public void setClasses(ArrayList<Class> classes) {
-        this.classes = classes;
+    public void setLessons(ArrayList<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
-    public void addClass(Class newClass){
-        this.classes.add(newClass);
+    public void addClass(Lesson newLesson){
+        this.lessons.add(newLesson);
     }
 
     public String getCourseImage() {

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.smarthunter.Model.Class;
+import com.example.smarthunter.Model.Lesson;
 import com.example.smarthunter.R;
 
 public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerViewClassesAdapter.ViewHolder>{
@@ -39,21 +39,21 @@ public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerVie
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View itemView = layoutInflater.inflate(
-                R.layout.recyclerview_classes, parent, false
+                R.layout.recyclerview_lessons, parent, false
         );
         return new RecyclerViewClassesAdapter.ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Class c = courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getClasses().get(position);
-        holder.textViewClassTitle.setText(c.getClassTitle());
-        holder.textViewClassDescription.setText(c.getClassDescription());
+        Lesson c = courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getLessons().get(position);
+        holder.textViewClassTitle.setText(c.getLessonTitle());
+        holder.textViewClassDescription.setText(c.getLessonDescription());
     }
 
     @Override
     public int getItemCount() {
-        return courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getClasses().size();
+        return courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getLessons().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -63,9 +63,9 @@ public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerVie
 
         public ViewHolder(View view) {
             super(view);
-            imageViewClass = itemView.findViewById(R.id.imageViewClass);
-            textViewClassTitle = itemView.findViewById(R.id.textViewClassTitle);
-            textViewClassDescription = itemView.findViewById(R.id.textViewClassDescription);
+            imageViewClass = itemView.findViewById(R.id.imageViewLesson);
+            textViewClassTitle = itemView.findViewById(R.id.textViewLessonTitle);
+            textViewClassDescription = itemView.findViewById(R.id.textViewLessonDescription);
 
             imageViewClass.setOnClickListener(new View.OnClickListener() {
                 @Override

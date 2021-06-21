@@ -1,6 +1,5 @@
 package com.example.smarthunter.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,8 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.smarthunter.Model.Class;
-import com.example.smarthunter.Model.Course;
 import com.example.smarthunter.R;
 import com.example.smarthunter.Repository.CourseRepository;
 import com.example.smarthunter.Repository.RecyclerViewCoursesAdapter;
@@ -35,7 +32,7 @@ public class CourseListActivity extends GenericActivity {
         Drawable logo = getResources().getDrawable(R.drawable.logocourses, getTheme());
         getSupportActionBar().setBackgroundDrawable(logo);
         getSupportActionBar().setTitle(" ");
-       //repositorys
+       //repositories
         userRepository = (UserRepository) UserRepository.getInstance(CourseListActivity.this,null,null);
         CourseRepository.setLoadDataListener(new CourseRepository.LoadDataListener() {
             @Override
@@ -60,19 +57,20 @@ public class CourseListActivity extends GenericActivity {
                 layoutManager.getOrientation());
 
         recyclerView.addItemDecoration(dividerItemDecoration);
+
         adapter.setClickListener(new RecyclerViewCoursesAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-                Intent intent = new Intent(CourseListActivity.this, ClassListActivity.class);
+                Intent intent = new Intent(CourseListActivity.this, LessonListActivity.class);
                 startActivity(intent);
             }
 
             @Override
             public void onEnrollClick(int position, View view) {
                 Button b = (Button) view;
-                String typeEnroll = (String) b.getText();
-                Log.d("typeEnrollUserCourse",typeEnroll);
-                if(typeEnroll.toLowerCase().equals("enroll")){
+                String type = (String) b.getText();
+                Log.d("buttonType",type);
+                if(type.toLowerCase().equals("enroll")){
                     CourseRepository.setLoadDataListener(new CourseRepository.LoadDataListener() {
                         @Override
                         public void onSuccessDataLoad() {
@@ -90,8 +88,7 @@ public class CourseListActivity extends GenericActivity {
                     });
                     courseRepository.enrollUser(courseRepository.getCourses().get(position).getId(),userRepository.loggedUser.getId());
                     Log.d("LOGGEDUSERDID",String.valueOf(userRepository.loggedUser.getId()));
-                    Log.d("CURRENTCOURSEID",String.valueOf(courseRepository.getCourses().get(position).getId()));
-                }else{
+                }else {
                     CourseRepository.setLoadDataListener(new CourseRepository.LoadDataListener() {
                         @Override
                         public void onSuccessDataLoad() {
@@ -99,12 +96,12 @@ public class CourseListActivity extends GenericActivity {
                             ArrayList<Integer> coursesIds = userRepository.loggedUser.getCoursesIds();
                             for(Integer courseId:coursesIds){
                                 if(courseId == idCourseToRemove){
-                                    coursesIds.remove((int) courseId);
+                                    coursesIds.remove((int) idCourseToRemove);
                                 }
                             }
                             userRepository.loggedUser.setCoursesIds(coursesIds);
                             adapter.notifyItemChanged(position);
-                            createToast("You Unenrolled of the course");
+                            createToast("You Unenrolled the course");
                         }
 
                         @Override
@@ -112,9 +109,9 @@ public class CourseListActivity extends GenericActivity {
                             createToast("Could not Unenroll");
                         }
                     });
-                    courseRepository.unenrollUser(courseRepository.getCourses().get(position).getId());
-                    Log.d("CURRENTCOURSEID",String.valueOf(courseRepository.getCourses().get(position).getId()));
                 }
+                courseRepository.unenrollUser(courseRepository.getCourses().get(position).getId());
+                Log.d("CURRENTCOURSEID",String.valueOf(courseRepository.getCourses().get(position).getId()));
             }
 
             @Override

@@ -11,13 +11,13 @@
     <string name="course_list">Courses List</string>
     <string name="course_image">Course Image</string>
     <string name="course_title">Course Title</string>
-    <string name="classes_list">Classes List</string>
-    <string name="classes_title">Class Title</string>
-    <string name="classimage">classImage</string>
-    <string name="class_description">Class Description</string>
-    <string name="favorites">Favorites</string>
+    <string name="lesson_list">Lesson List</string>
+    <string name="lesson_title">Lesson Title</string>
+    <string name="lessonimage">lessonImage</string>
+    <string name="lesson_description">Lesson Description</string>
     <string name="profile">Profile</string>
     <string name="enroll">Enroll</string>
     <string name="menu">Menu</string>
     <string name="update">Update</string>
+    <string name="enrolled_courses">Enrolled Courses</string>
 </resources>

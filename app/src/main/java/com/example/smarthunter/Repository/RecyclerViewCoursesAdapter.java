@@ -7,12 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.smarthunter.Model.Course;
-import com.example.smarthunter.Model.User;
 import com.example.smarthunter.R;
 
 public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerViewCoursesAdapter.ViewHolder> {
@@ -53,7 +50,6 @@ public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(@NonNull RecyclerViewCoursesAdapter.ViewHolder holder, int position) {
         Course c = courseRepository.getCourses().get(position);
         holder.textViewCourseTitle.setText(c.getCourseTitle());
-        //holder.imageViewCourse.setImageURI();
         holder.textViewCourseDescription.setText(c.getCourseDescription());
         for(Integer courseId : userRepository.getLoggedUser().getCoursesIds()){
             if(courseId == c.getId()){

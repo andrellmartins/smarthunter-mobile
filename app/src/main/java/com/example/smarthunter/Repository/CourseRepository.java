@@ -10,8 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.smarthunter.Model.Class;
+import com.example.smarthunter.Model.Lesson;
 import com.example.smarthunter.Model.Course;
 
 import org.json.JSONArray;
@@ -19,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class CourseRepository extends Repository{
@@ -96,7 +94,7 @@ public class CourseRepository extends Repository{
                             JSONArray activities = lesson.getJSONArray("activities");
                             for(int k=0;k<activities.length();k++){
                                 JSONObject activity = activities.getJSONObject(k);
-                                newCourse.addClass(new Class(
+                                newCourse.addClass(new Lesson(
                                         activity.getString("urlVideo").split("watch\\?v[=]")[1],
                                         lesson.getString("name")+" - Class "+activity.getString("id"),
                                         activity.getString("title")
@@ -106,7 +104,7 @@ public class CourseRepository extends Repository{
                             }
 
                         }
-                        Log.d("classesLength",String.valueOf(newCourse.getClasses().size()));
+                        Log.d("classesLength",String.valueOf(newCourse.getLessons().size()));
                         courses.add(newCourse);
                     }
                     Log.d("coursesLength",String.valueOf(courses.size()));
@@ -191,7 +189,18 @@ public class CourseRepository extends Repository{
     }
     public void unenrollUser(Integer courseId) {
         String url = URL_CONN+"enrolled_courses/"+courseId;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+        JSONObject unenrollJSON = new JSONObject();
+        try {
+            unenrollJSON.put("id",courseId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            if(loadDataListener != null){
+                loadDataListener.onErrorDataLoad();
+                loadDataListener = null;
+            }
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.DELETE, url, unenrollJSON, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if(loadDataListener != null){
