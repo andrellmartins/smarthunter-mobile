@@ -124,4 +124,10 @@ public class CourseListActivity extends GenericActivity {
         });
 
         }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        courseRepository.loadData();
+    }
 }

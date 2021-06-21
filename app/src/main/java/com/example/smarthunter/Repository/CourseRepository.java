@@ -60,7 +60,12 @@ public class CourseRepository extends Repository{
         return instance;
     }
 
+    public void clearData(){
+        instance = null;
+    }
+
     public void loadData(){
+        UserRepository userRepository = (UserRepository) UserRepository.getInstance(context,null,null);
         Log.d("LoadData-IN","TEST");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_BASE, null, new Response.Listener<JSONObject>() {
             @Override
@@ -71,9 +76,21 @@ public class CourseRepository extends Repository{
                     JSONArray coursesJSON = response.getJSONArray("content");
                     for(int i = 0;i<coursesJSON.length();i++){
                         JSONObject courseJSON = coursesJSON.getJSONObject(i);
+
                         Course newCourse = new Course(
                         courseJSON.getInt("id"),courseJSON.getString("name"),courseJSON.getString("description"),courseJSON.getString("thumbUrl"),new ArrayList<>());
                         JSONArray lessons = courseJSON.getJSONArray("lessons");
+                        if(userRepository.filterEnrolled){
+                            boolean existe = false;
+                            for(Integer courseId:userRepository.loggedUser.getCoursesIds()){
+                                if(courseJSON.getInt("id") == courseId){
+                                    existe = true;
+                                }
+                            }
+                            if(!existe){
+                                continue;
+                            }
+                        }
                         for(int j=0;j<lessons.length();j++){
                             JSONObject lesson = lessons.getJSONObject(j);
                             JSONArray activities = lesson.getJSONArray("activities");
@@ -85,6 +102,7 @@ public class CourseRepository extends Repository{
                                         activity.getString("title")
                                     )
                                 );
+
                             }
 
                         }

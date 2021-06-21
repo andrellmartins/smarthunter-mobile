@@ -31,6 +31,7 @@ public class UserRepository extends Repository{
     protected static String URL_BASE = Repository.URL_CONN + "users";
     public static LoginListener loginListener;
     public User loggedUser;
+    public boolean filterEnrolled;
     protected static String TOKEN;
     protected static String TOKEN_TYPE;
 
@@ -81,6 +82,8 @@ public class UserRepository extends Repository{
                         Log.d("Token Header",header.toString());
                         int userId = headerJSON.getInt("jti");
                         loggedUser.setId(userId);
+
+                        filterEnrolled = false;
 
                         loadData(userId);
 
