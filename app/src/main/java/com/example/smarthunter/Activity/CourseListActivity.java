@@ -69,7 +69,7 @@ public class CourseListActivity extends GenericActivity {
             public void onEnrollClick(int position, View view) {
                 Button b = (Button) view;
                 String type = (String) b.getText();
-                Log.d("buttonType",type);
+
                 if(type.toLowerCase().equals("enroll")){
                     CourseRepository.setLoadDataListener(new CourseRepository.LoadDataListener() {
                         @Override
@@ -89,6 +89,7 @@ public class CourseListActivity extends GenericActivity {
                     courseRepository.enrollUser(courseRepository.getCourses().get(position).getId(),userRepository.loggedUser.getId());
                     Log.d("LOGGEDUSERDID",String.valueOf(userRepository.loggedUser.getId()));
                 }else {
+                    Log.d("buttonType", type);
                     CourseRepository.setLoadDataListener(new CourseRepository.LoadDataListener() {
                         @Override
                         public void onSuccessDataLoad() {
@@ -97,6 +98,7 @@ public class CourseListActivity extends GenericActivity {
                             for(Integer courseId:coursesIds){
                                 if(courseId == idCourseToRemove){
                                     coursesIds.remove((int) idCourseToRemove);
+                                    Log.d("Removed course", courseId.toString());
                                 }
                             }
                             userRepository.loggedUser.setCoursesIds(coursesIds);
