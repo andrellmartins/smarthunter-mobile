@@ -70,7 +70,7 @@ public class UserRepository extends Repository{
                     try{
                         TOKEN = response.getString("token");
                         TOKEN_TYPE = response.getString("type");
-                        loggedUser = new User(0,"",username,password,new ArrayList<String>());
+                        loggedUser = new User(0,"",username,password,new ArrayList<Integer>());
                         String[] tokenArray = response.getString("token").split("\\.");
 
                         Base64.Decoder decoder = Base64.getDecoder();
@@ -79,13 +79,13 @@ public class UserRepository extends Repository{
                         JSONObject headerJSON = new JSONObject(header);
 
                         Log.d("Token Header",header.toString());
-                        int userId = Integer.parseInt(headerJSON.getString("jti"));
+                        int userId = headerJSON.getInt("jti");
                         loggedUser.setId(userId);
 
                         loadData(userId);
 
                     }catch(JSONException e){
-                        Log.d("keepAlive","Erro no Login - Parse JSON:"+e.getMessage());
+                        Log.d("keepAlive","Login Error - Parse JSON:"+e.getMessage());
                         if(loginListener != null){
                             loginListener.onErrorListener();
                         }
@@ -95,7 +95,7 @@ public class UserRepository extends Repository{
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.d("KeepAlive","Erro ao requisitar dados do Login.");
+                    Log.d("KeepAlive","Error, Cannot request login Data.");
                     instance = null;
                     if(loginListener != null){
                         loginListener.onErrorListener();
@@ -111,7 +111,7 @@ public class UserRepository extends Repository{
     public void loadData(int userID){
         assert TOKEN != null && TOKEN_TYPE != null;
         String url = URL_BASE+"/"+String.valueOf(userID);
-        Log.d("keepAlive","Running URL:"+url);
+        Log.d("keepAlive","Start URL:"+url);
         // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new com.android.volley.toolbox.JsonObjectRequest(
             Request.Method.GET, url,null,
@@ -123,14 +123,14 @@ public class UserRepository extends Repository{
 
                     try {
                         if(loggedUser.getEmail().equals(responseJson.getString("email"))){
-                            ArrayList<String> coursesIds = new ArrayList<String>();
+                            ArrayList<Integer> coursesIds = new ArrayList<Integer>();
                             JSONArray userEnrolledCourses = responseJson.getJSONArray("enrolledCourses");
                             for(int j=0;j<userEnrolledCourses.length();j++){
                                 JSONObject enrolledCourse = userEnrolledCourses.getJSONObject(j);
-                                String courseId = enrolledCourse.getJSONObject("course").getString("id");
+                                Integer courseId = enrolledCourse.getJSONObject("course").getInt("id");
                                 coursesIds.add(courseId);
                             }
-                            User newUser = new User(loggedUser.getId(),responseJson.getString("name"),responseJson.getString("email"),"",coursesIds);
+                            User newUser = new User(responseJson.getInt("id"),responseJson.getString("name"),responseJson.getString("email"),"",coursesIds);
                             loggedUser = newUser;
                             Log.d("loggedUserData",responseJson.toString());
                         }
@@ -146,7 +146,7 @@ public class UserRepository extends Repository{
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.d("RequisitionError", "Erro ao Solicitar usuários");
+                    Log.d("Request Error", "Error Requesting Users");
                     if(loginListener != null){
                         loginListener.onErrorListener();
                     }
@@ -156,7 +156,9 @@ public class UserRepository extends Repository{
         ){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return getRequestHeaders();
+                Log.d("Autenticate:",TOKEN_TYPE+" "+TOKEN);
+
+                return getRequestHeaders(TOKEN,TOKEN_TYPE);
             }
         };
         Log.d("keepAlive","PosRequest - Pre Queue");
@@ -168,6 +170,9 @@ public class UserRepository extends Repository{
     public static Repository getInstance(Context context, @Nullable String username,@Nullable String password) {
         if(instance == null && username != null && password != null){
             instance = new UserRepository(context,username,password);
+        }
+        if(instance != null){
+            instance.setContext(context);
         }
         return instance;
     }
@@ -203,7 +208,7 @@ public class UserRepository extends Repository{
         queue.add(jsonRequest);
     }
     public void updateLoggedUser(String name,String email,String password){
-        if(password.equals("")){
+        if(name.equals("") || email.equals("") || password.equals("")){
             if(loginListener != null){
                 loginListener.onErrorListener();
             }
@@ -212,13 +217,14 @@ public class UserRepository extends Repository{
         String url = URL_BASE+"/"+String.valueOf(loggedUser.getId());
         JSONObject jsonObject = new JSONObject();
         try{
-            if(loggedUser.getName().equals(name))
-                jsonObject.put("name",name);
-            if(loggedUser.getEmail().equals(email))
+            jsonObject.put("name",name);
             jsonObject.put("email",email);
             jsonObject.put("password",password);
         }catch(JSONException e){
             Log.d("updateLoggedUser_JSON_E",e.getMessage());
+            if(loginListener != null){
+                loginListener.onErrorListener();
+            }
         }
 
         Log.d("updateLoggedUser_url",url);
@@ -226,16 +232,25 @@ public class UserRepository extends Repository{
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("SUCCESS_UPDATE_USER",response.toString());
+                loggedUser.setName(name);
+                loggedUser.setEmail(email);
+                loggedUser.setPassword(password);
+                if(loginListener != null){
+                    loginListener.onSuccessListener(null);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR_UPDATE_USER","Erro ao atualizar o Usuário");
+                Log.d("ERROR_UPDATE_USER","Error Updating USER");
+                if(loginListener != null){
+                    loginListener.onErrorListener();
+                }
             }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return getRequestHeaders();
+                return getRequestHeaders(TOKEN,TOKEN_TYPE);
             }
         };
 

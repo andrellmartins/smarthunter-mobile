@@ -41,8 +41,9 @@ public class ClassListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(" ");
         userRepository = (UserRepository) UserRepository.getInstance(ClassListActivity.this,null,null);
         courseRepository = CourseRepository.getInstance(ClassListActivity.this,userRepository.getTokenType(),userRepository.getTOKEN());
+
         recyclerView = findViewById(R.id.recyclerViewClasses);
-        RecyclerViewClassesAdapter adapter = new RecyclerViewClassesAdapter();
+        RecyclerViewClassesAdapter adapter = new RecyclerViewClassesAdapter(ClassListActivity.this);
         adapter.setClickListener(new RecyclerViewClassesAdapter.ClickListener() {
             @Override
             public void onVideoClick(int position, View view) {

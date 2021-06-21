@@ -17,6 +17,12 @@ public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerVie
     int counter = 0;
 
     private static ClickListener clickListener;
+    Context context;
+    CourseRepository courseRepository;
+    public RecyclerViewClassesAdapter(Context context){
+        this.context = context;
+        courseRepository = CourseRepository.getInstance(context,null,null);
+    }
 
     public void setClickListener(RecyclerViewClassesAdapter.ClickListener clickListener) {
         RecyclerViewClassesAdapter.clickListener = clickListener;
@@ -40,14 +46,14 @@ public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Class c = CourseRepository.getInstance().getCourses().get(CourseRepository.getInstance().getSelectedCourse()).getClasses().get(position);
+        Class c = courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getClasses().get(position);
         holder.textViewClassTitle.setText(c.getClassTitle());
         holder.textViewClassDescription.setText(c.getClassDescription());
     }
 
     @Override
     public int getItemCount() {
-        return CourseRepository.getInstance().getCourses().get(CourseRepository.getInstance().getSelectedCourse()).getClasses().size();
+        return courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getClasses().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

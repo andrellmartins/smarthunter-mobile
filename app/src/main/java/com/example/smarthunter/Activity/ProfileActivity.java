@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.smarthunter.Model.User;
 import com.example.smarthunter.R;
 import com.example.smarthunter.Repository.UserRepository;
 
@@ -44,6 +45,18 @@ public class ProfileActivity extends GenericActivity {
 
     public void buttonUpdateUser(View view){
         Log.d("buttonUpdateUser","Clicked");
+        UserRepository.setLoginListener(new UserRepository.LoginListener() {
+            @Override
+            public void onSuccessListener(User user) {
+                createToast("User Updated Sucessfully.");
+                editTextProfilePassword.setText("");
+            }
+
+            @Override
+            public void onErrorListener() {
+                createToast("Error Updating User.");
+            }
+        });
         userRepository.updateLoggedUser(editTextProfileName.getText().toString(),editTextProfileEmail.getText().toString(),editTextProfilePassword.getText().toString());
     }
 }

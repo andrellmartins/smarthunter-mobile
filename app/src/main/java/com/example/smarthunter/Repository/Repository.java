@@ -23,13 +23,16 @@ abstract public class Repository implements SingletonRepository {
         this.context = context;
     }
 
-    protected HashMap<String, String> getRequestHeaders(){
+    protected HashMap<String, String> getRequestHeaders(String TOKEN,String TOKEN_TYPE){
         HashMap<String,String> headers = new HashMap<String,String>();
         headers.put("Content-Type","application/json");
         headers.put("Accept","application/json");
+        if(TOKEN == null || TOKEN_TYPE == null) {
+            Log.d("REQUEST_HEADERS", headers.toString());
+            return headers;
+        }
         headers.put("Authorization",TOKEN_TYPE+" "+TOKEN);
         Log.d("REQUEST_HEADERS",headers.toString());
         return headers;
     }
-
 }

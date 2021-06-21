@@ -7,9 +7,9 @@ public class User {
     protected String name;
     protected String email;
     protected String password;
-    protected ArrayList<String> coursesIds;
+    protected ArrayList<Integer> coursesIds;
 
-    public User(int id,String name, String email, String password, ArrayList<String> coursesIds) {
+    public User(int id,String name, String email, String password, ArrayList<Integer> coursesIds) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -49,11 +49,11 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<String> getCoursesIds() {
+    public ArrayList<Integer> getCoursesIds() {
         return coursesIds;
     }
 
-    public void setCoursesIds(ArrayList<String> coursesIds) {
+    public void setCoursesIds(ArrayList<Integer> coursesIds) {
         this.coursesIds = coursesIds;
     }
 }

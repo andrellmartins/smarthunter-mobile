@@ -12,15 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smarthunter.Model.Course;
+import com.example.smarthunter.Model.User;
 import com.example.smarthunter.R;
 
 public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerViewCoursesAdapter.ViewHolder> {
 
     int counter = 0;
+
     CourseRepository courseRepository;
+    UserRepository userRepository;
     private static ClickListener clickListener;
 
     public RecyclerViewCoursesAdapter(Context context){
+        userRepository = (UserRepository) UserRepository.getInstance(context,null,null);
         courseRepository = CourseRepository.getInstance(context,null,null);
     }
 
@@ -47,15 +51,21 @@ public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewCoursesAdapter.ViewHolder holder, int position) {
-        Course c = CourseRepository.getInstance().getCourses().get(position);
+        Course c = courseRepository.getCourses().get(position);
         holder.textViewCourseTitle.setText(c.getCourseTitle());
         //holder.imageViewCourse.setImageURI();
         holder.textViewCourseDescription.setText(c.getCourseDescription());
+        for(Integer courseId : userRepository.getLoggedUser().getCoursesIds()){
+            if(courseId == c.getId()){
+                holder.buttonEnroll.setText("UNENROLL");
+                break;
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        return CourseRepository.getInstance().getCourses().size();
+        return courseRepository.getCourses().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

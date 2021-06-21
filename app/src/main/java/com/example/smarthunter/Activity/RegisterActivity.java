@@ -35,7 +35,7 @@ public class RegisterActivity extends GenericActivity {
     }
 
     public void onButtonRegisterClick(View view){
-        User newUser = new User(0,editTextViewName.getText().toString(),editTextViewEmail.getText().toString(),editTextPassword.getText().toString(),new ArrayList<String>());
+        User newUser = new User(0,editTextViewName.getText().toString(),editTextViewEmail.getText().toString(),editTextPassword.getText().toString(),new ArrayList<Integer>());
         UserRepository.setLoginListener(new UserRepository.LoginListener() {
             @Override
             public void onSuccessListener(User user) {

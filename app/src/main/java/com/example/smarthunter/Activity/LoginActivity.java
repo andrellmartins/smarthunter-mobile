@@ -32,7 +32,7 @@ public class LoginActivity extends GenericActivity {
         password = findViewById(R.id.editTextPasswordLogin);
 
         email.setText("carlos@gmail.com");
-        password.setText("12345");
+        password.setText("teste");
 
     }
 
