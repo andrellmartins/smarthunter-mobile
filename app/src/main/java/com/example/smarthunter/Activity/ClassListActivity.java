@@ -1,12 +1,10 @@
 package com.example.smarthunter.Activity;
 
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,14 +16,14 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 import com.example.smarthunter.R;
-import com.example.smarthunter.Repository.CoursesRepository;
+import com.example.smarthunter.Repository.CourseRepository;
 import com.example.smarthunter.Repository.RecyclerViewClassesAdapter;
 import com.example.smarthunter.Repository.RecyclerViewCoursesAdapter;
 
 public class ClassListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewCoursesAdapter adapter;
-    CoursesRepository coursesRepository;
+    CourseRepository courseRepository;
 
     private static final int REQ_START_STANDALONE_PLAYER = 1;
     private static final int REQ_RESOLVE_SERVICE_MISSING = 2;
@@ -38,13 +36,13 @@ public class ClassListActivity extends AppCompatActivity {
         Drawable logo = getResources().getDrawable(R.drawable.logoclasses, getTheme());
         getSupportActionBar().setBackgroundDrawable(logo);
         getSupportActionBar().setTitle(" ");
-        coursesRepository = CoursesRepository.getInstance();
+        courseRepository = CourseRepository.getInstance();
         recyclerView = findViewById(R.id.recyclerViewClasses);
         RecyclerViewClassesAdapter adapter = new RecyclerViewClassesAdapter();
         adapter.setClickListener(new RecyclerViewClassesAdapter.ClickListener() {
             @Override
             public void onVideoClick(int position, View view) {
-                String videoLink = coursesRepository.getCourses().get(coursesRepository.getSelectedCourse()).getClasses().get(position).getClassLink();
+                String videoLink = courseRepository.getCourses().get(courseRepository.getSelectedCourse()).getClasses().get(position).getClassLink();
                 Intent intent = YouTubeStandalonePlayer.createVideoIntent(
                         ClassListActivity.this, DeveloperKey.DEVELOPER_KEY, videoLink, 0, true, false);
                 startActivityForResult(intent, REQ_START_STANDALONE_PLAYER);

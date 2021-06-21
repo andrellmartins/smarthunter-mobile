@@ -3,16 +3,26 @@ package com.example.smarthunter.Model;
 import java.util.ArrayList;
 
 public class User {
-    public String name;
-    public String email;
-    public String password;
-    public ArrayList<Course> courses;
+    protected int id;
+    protected String name;
+    protected String email;
+    protected String password;
+    protected ArrayList<String> coursesIds;
 
-    public User(String name, String email, String password, ArrayList<Course> courses) {
+    public User(int id,String name, String email, String password, ArrayList<String> coursesIds) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.courses = courses;
+        this.coursesIds = coursesIds;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,11 +49,11 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<Course> getCourses() {
-        return courses;
+    public ArrayList<String> getCoursesIds() {
+        return coursesIds;
     }
 
-    public void setCourses(ArrayList<Course> courses) {
-        this.courses = courses;
+    public void setCoursesIds(ArrayList<String> coursesIds) {
+        this.coursesIds = coursesIds;
     }
 }

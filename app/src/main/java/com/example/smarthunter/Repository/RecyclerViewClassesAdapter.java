@@ -1,11 +1,9 @@
 package com.example.smarthunter.Repository;
 
 import android.content.Context;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,10 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smarthunter.Model.Class;
-import com.example.smarthunter.Model.Course;
 import com.example.smarthunter.R;
-
-import java.text.BreakIterator;
 
 public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerViewClassesAdapter.ViewHolder>{
     int counter = 0;
@@ -45,14 +40,14 @@ public class RecyclerViewClassesAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Class c = CoursesRepository.getInstance().getCourses().get(CoursesRepository.getInstance().getSelectedCourse()).getClasses().get(position);
+        Class c = CourseRepository.getInstance().getCourses().get(CourseRepository.getInstance().getSelectedCourse()).getClasses().get(position);
         holder.textViewClassTitle.setText(c.getClassTitle());
         holder.textViewClassDescription.setText(c.getClassDescription());
     }
 
     @Override
     public int getItemCount() {
-        return CoursesRepository.getInstance().getCourses().get(CoursesRepository.getInstance().getSelectedCourse()).getClasses().size();
+        return CourseRepository.getInstance().getCourses().get(CourseRepository.getInstance().getSelectedCourse()).getClasses().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

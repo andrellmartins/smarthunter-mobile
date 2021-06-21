@@ -13,7 +13,7 @@ import android.view.View;
 import com.example.smarthunter.Model.Class;
 import com.example.smarthunter.Model.Course;
 import com.example.smarthunter.R;
-import com.example.smarthunter.Repository.CoursesRepository;
+import com.example.smarthunter.Repository.CourseRepository;
 import com.example.smarthunter.Repository.RecyclerViewCoursesAdapter;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class CourseListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewCoursesAdapter adapter;
-    CoursesRepository coursesRepository;
+    CourseRepository courseRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class CourseListActivity extends AppCompatActivity {
         courses.add(new Course("qualquer coisa", "Curso basico de java para android", classes, "qualquer coisa 2", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."));
         courses.add(new Course("qualquer coisa", "Curso basico de java para android", classes, "qualquer coisa 2", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."));
         courses.add(new Course("qualquer coisa", "Curso basico de java para android", classes, "qualquer coisa 2", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."));
-        CoursesRepository.getInstance().setCourses(courses);
-        coursesRepository = CoursesRepository.getInstance();
+        CourseRepository.getInstance().setCourses(courses);
+        courseRepository = CourseRepository.getInstance();
         recyclerView = findViewById(R.id.recyclerViewCourses);
         adapter = new RecyclerViewCoursesAdapter();
         recyclerView.setAdapter(adapter);

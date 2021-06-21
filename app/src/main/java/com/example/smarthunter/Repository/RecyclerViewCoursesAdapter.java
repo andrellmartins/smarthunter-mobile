@@ -43,7 +43,7 @@ public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewCoursesAdapter.ViewHolder holder, int position) {
-        Course c = CoursesRepository.getInstance().getCourses().get(position);
+        Course c = CourseRepository.getInstance().getCourses().get(position);
         holder.textViewCourseTitle.setText(c.getCourseTitle());
         //holder.imageViewCourse.setImageURI();
         holder.textViewCourseDescription.setText(c.getCourseDescription());
@@ -51,7 +51,7 @@ public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
-        return CoursesRepository.getInstance().getCourses().size();
+        return CourseRepository.getInstance().getCourses().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

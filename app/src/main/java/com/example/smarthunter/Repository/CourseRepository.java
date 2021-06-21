@@ -3,20 +3,19 @@ package com.example.smarthunter.Repository;
 import android.content.Context;
 
 import com.example.smarthunter.Model.Course;
-import com.example.smarthunter.Model.User;
 
 import java.util.ArrayList;
 
-public class CoursesRepository {
-    private static final CoursesRepository instance = new CoursesRepository();
+public class CourseRepository {
+    private static final CourseRepository instance = new CourseRepository();
     private ArrayList<Course> courses;
     private Context context;
     private int selectedCourse;
 
-    public CoursesRepository() {
+    public CourseRepository() {
     }
 
-    public static CoursesRepository getInstance() {
+    public static CourseRepository getInstance() {
         return instance;
     }
 
