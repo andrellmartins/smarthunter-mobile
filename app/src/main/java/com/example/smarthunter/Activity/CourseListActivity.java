@@ -97,7 +97,7 @@ public class CourseListActivity extends GenericActivity {
                             ArrayList<Integer> coursesIds = userRepository.loggedUser.getCoursesIds();
                             for(Integer courseId:coursesIds){
                                 if(courseId == idCourseToRemove){
-                                    coursesIds.remove((int) idCourseToRemove);
+                                    coursesIds.remove(idCourseToRemove);
                                     Log.d("Removed course", courseId.toString());
                                 }
                             }
@@ -111,8 +111,8 @@ public class CourseListActivity extends GenericActivity {
                             createToast("Could not Unenroll");
                         }
                     });
+                    courseRepository.unenrollUser(courseRepository.getCourses().get(position).getId(),userRepository.loggedUser.getId());
                 }
-                courseRepository.unenrollUser(courseRepository.getCourses().get(position).getId());
                 Log.d("CURRENTCOURSEID",String.valueOf(courseRepository.getCourses().get(position).getId()));
             }
 

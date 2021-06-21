@@ -10,6 +10,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.smarthunter.Model.Lesson;
 import com.example.smarthunter.Model.Course;
 
@@ -187,25 +189,67 @@ public class CourseRepository extends Repository{
 
         queue.add(jsonObjectRequest);
     }
-    public void unenrollUser(Integer courseId) {
-        String url = URL_CONN+"enrolled_courses/"+courseId;
-        JSONObject unenrollJSON = new JSONObject();
-        try {
-            unenrollJSON.put("id",courseId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            if(loadDataListener != null){
-                loadDataListener.onErrorDataLoad();
-                loadDataListener = null;
-            }
-        }
+    public void unenrollUser(Integer courseId,Integer userId) {
+        //get Enrolled Courses
+        String url = URL_CONN+"enrolled_courses";
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.DELETE, url, unenrollJSON, new Response.Listener<JSONObject>() {
+                Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                if(loadDataListener != null){
-                    loadDataListener.onSuccessDataLoad();
-                    loadDataListener = null;
+                Log.d("requestEnrolledCourses",response.toString());
+                Integer deleteId = 0;
+                try{
+                    JSONArray enrolledCourses_list = response.getJSONArray("content");
+                    for(int i = 0;i<enrolledCourses_list.length();i++){
+                        JSONObject enrolledCourseJSON = enrolledCourses_list.getJSONObject(i);
+                        Integer idCourse = enrolledCourseJSON.getJSONObject("course").getInt("id");
+                        Integer idUser = enrolledCourseJSON.getJSONObject("user").getInt("id");
+                        if(idCourse == courseId && idUser == userId){
+                            deleteId = enrolledCourseJSON.getInt("id");
+                        }
+                    }
+                }catch( JSONException e){
+                    Log.d("JSONPARSE","ERROR PARSING JSON ON ENROLLED COURSES REQUEST");
+                }
+                if(deleteId != 0){
+                    Log.d("deleteEnrolledCourse",deleteId.toString());
+                    StringRequest stringRequestUnenroll = new StringRequest(
+                            Request.Method.DELETE,
+                            URL_CONN + "enrolled_courses/" + deleteId,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("UnEnrolledCourses","course UNENROLLED");
+                                    if(instance.loadDataListener != null){
+                                        instance.loadDataListener.onSuccessDataLoad();
+                                        instance.loadDataListener = null;
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("UnEnrolledCoursesError","Error unenrolling, error:");
+                                    if(instance.loadDataListener != null){
+                                        instance.loadDataListener.onErrorDataLoad();
+                                        instance.loadDataListener = null;
+                                    }
+                                }
+                            }
+
+                    ){
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            return getRequestHeaders(instance.TOKEN,instance.TOKEN_TYPE);
+                        }
+                    };
+                    queue.add(stringRequestUnenroll);
+                }else{
+                    if(loadDataListener != null){
+                        loadDataListener.onErrorDataLoad();
+                        loadDataListener = null;
+                    }
                 }
             }
         }, new Response.ErrorListener() {

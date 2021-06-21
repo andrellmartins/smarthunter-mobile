@@ -55,6 +55,9 @@ public class RecyclerViewCoursesAdapter extends RecyclerView.Adapter<RecyclerVie
             if(courseId == c.getId()){
                 holder.buttonEnroll.setText("UNENROLL");
                 break;
+            }else{
+                holder.buttonEnroll.setText("ENROLL");
+                break;
             }
         }
     }

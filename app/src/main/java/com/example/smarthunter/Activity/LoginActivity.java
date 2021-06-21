@@ -31,8 +31,8 @@ public class LoginActivity extends GenericActivity {
         email = findViewById(R.id.editTextEmailLogin);
         password = findViewById(R.id.editTextPasswordLogin);
 
-        email.setText("andre@hotmail.com");
-        password.setText("1234");
+        email.setText("carlos@mail.com");
+        password.setText("12345");
 
     }
 
